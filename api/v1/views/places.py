@@ -34,22 +34,22 @@ def places_of_city(city_id):
         return make_response(jsonify(city.to_dict()), 201)
 
 
-@app_views.route('places/<city_id>', methods=['GET', 'DELETE', 'PUT'])
-def places_by_id(city_id):
+@app_views.route('places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
+def places_by_id(place_id):
     """
         Route for a city that handle http methods
-        city_id: is the id of the searched city
+        place_id: is the id of the searched place
     """
-    city = storage.get(City, city_id)
+    place = storage.get(Place, place_id)
 
-    if not city:
+    if not place:
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        return jsonify(place.to_dict())
 
     if request.method == 'DELETE':
-        city.delete()
+        place.delete()
         storage.save()
         return jsonify({}), 200
 
@@ -57,7 +57,7 @@ def places_by_id(city_id):
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for attr, val in request.get_json().items():
-            if attr not in ['id', 'city_id', 'created_at', 'updated_at']:
-                setattr(city, attr, val)
-        city.save()
-        return jsonify(city.to_dict())
+            if attr not in ['id', 'place_id', 'created_at', 'updated_at']:
+                setattr(place, attr, val)
+        place.save()
+        return jsonify(place.to_dict())
