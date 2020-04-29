@@ -7,7 +7,8 @@ from models.place import Place
 from models.city import City
 
 
-@app_views.route('cities/<city_id>/places', methods=['GET', 'POST'])
+@app_views.route('cities/<city_id>/places', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def places_of_city(city_id):
     """
         Route for handle http methods for requested place by city
@@ -25,22 +26,23 @@ def places_of_city(city_id):
         return jsonify(info_city)
 
     if request.method == 'POST':
-        info = request.get_json()
-        if not info:
+        data = request.get_json()
+        if not data:
             abort(400, 'Not a JSON')
-        if "user_id" not in info:
+        if "user_id" not in data:
             abort(400, 'Missing user_id')
-        if storage.get("User", info["user_id"]) is None:
+        if storage.get("User", data["user_id"]) is None:
             abort(404)
-        if "name" not in info:
+        if "name" not in data:
             abort(400, 'Missing name')
 
-        new_place = Place(user_id=info["user_id"], name=info["name"], city_id=city_id)
+        new_place = Place(user_id=data["user_id"], name=data["name"], city_id=city_id)
         storage.save()
         return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def places_by_id(place_id):
     """
         Route for a city that handle http methods
@@ -63,9 +65,11 @@ def places_by_id(place_id):
         info = request.get_json()
         if not info:
            abort(400, "Not a JSON")
-        for attr, val in request.get_json().items():
-            if attr not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
-                setattr(place, attr, val)
-        place.save()
-        storage.save()
-        return jsonify(place.to_dict()), 200
+        dont = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
+        for key, value in info.items():
+            if key in dont:
+                pass
+            else:
+                setattr(place, key, value)
+    place.save()
+    return jsonify(place.to_dict()), 200
