@@ -4,8 +4,10 @@ from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
 host = getenv('HBNB_API_HOST', '0.0.0.0')
@@ -25,6 +27,7 @@ def not_found(error):
     """
     response = {'error': 'Not found'}
     return make_response(jsonify(response), 404)
+
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
