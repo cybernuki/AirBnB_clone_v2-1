@@ -31,14 +31,14 @@ def users():
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False,
-                 methods=['GET','DELETE', 'PUT'])
+                 methods=['GET', 'DELETE', 'PUT'])
 def users_params(user_id):
     """ Endpoint that retrieves, delete or update
         a user by id
 
         user_id: Is the id of the required user
     """
-    user =  storage.get(User, user_id)
+    user = storage.get(User, user_id)
 
     if not user:
         abort(404)
