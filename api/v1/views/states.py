@@ -42,6 +42,7 @@ def delete_state(state_id):
     if state in all_states:
         state = all_states[state]
         storage.delete(state)
+        state.save()
         storage.save()
         return jsonify({}), 200
     else:
@@ -61,6 +62,7 @@ def create_state():
         abort(400, 'Missing name')
     state = State(**info)
     storage.new(state)
+    state.save()
     storage.save()
     return jsonify(state.to_dict()), 201
 
