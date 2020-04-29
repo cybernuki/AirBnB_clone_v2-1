@@ -27,13 +27,13 @@ def places_of_city(city_id):
     if request.method == 'POST':
         info = request.get_json()
         if not info:
-        abort(400, 'Not a JSON')
+            abort(400, 'Not a JSON')
         if "user_id" not in info:
-        abort(400, 'Missing user_id')
+            abort(400, 'Missing user_id')
         if storage.get("User", info["user_id"]) is None:
-        abort(404)
+            abort(404)
         if "name" not in info:
-        abort(400, 'Missing name')
+            abort(400, 'Missing name')
 
         new_place = Place(user_id=info["user_id"], name=info["name"], city_id=city_id)
         storage.save()
