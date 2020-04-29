@@ -66,7 +66,7 @@ def create_amenity():
     return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id >', strict_slashes=False,
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['PUT'])
 def modify_amenity(amenity_id):
     """ An endpoint that modifies a specific
