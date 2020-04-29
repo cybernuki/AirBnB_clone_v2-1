@@ -8,7 +8,7 @@ from models.state import State
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
-def get_states(state_id=None):
+def get_states(state_id):
     """ Endpoint that retrieves all states
         or retrieves one state by id
 
@@ -24,7 +24,7 @@ def get_states(state_id=None):
         state = "State.{}".format(state_id)
         if state in all_states:
             state = all_states[state]
-            return jsonify(state.to_dict())
+            return jsonify(state.to_dict()), 200
         else:
             abort(404)
 
