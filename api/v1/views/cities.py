@@ -24,13 +24,14 @@ def cities_of_state(state_id):
         return jsonify(cities)
     if request.method == 'POST':
         if not request.get_json():
-            abort(jsonify({'error': 'Not a JSON'}), 400)
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in request.get_json():
-            abort(jsonify({'error': 'Missing name'}), 400)
+            return make_response(jsonify({'error': 'Missing name'}), 400)
         kwargs = request.get_json()
         kwargs['state_id'] = state_id
         city = City(**kwargs)
         city.save()
+        storage.save()
         return make_response(jsonify(city.to_dict()), 201)
 
 
