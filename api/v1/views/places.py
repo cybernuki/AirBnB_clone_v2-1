@@ -36,7 +36,8 @@ def places_of_city(city_id):
         if "name" not in data:
             abort(400, 'Missing name')
 
-        new_place = Place(user_id=data["user_id"], name=data["name"], city_id=city_id)
+        new_place = Place(user_id=data["user_id"], name=data["name"],
+                          city_id=city_id)
         storage.save()
         return jsonify(new_place.to_dict()), 201
 
@@ -64,8 +65,8 @@ def places_by_id(place_id):
     if request.method == 'PUT':
         info = request.get_json()
         if not info:
-           abort(400, "Not a JSON")
-        dont = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
+            abort(400, "Not a JSON")
+            dont = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
         for key, value in info.items():
             if key in dont:
                 pass
