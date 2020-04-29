@@ -22,6 +22,7 @@ from sqlalchemy.engine.base import Engine
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+
 class TestDBStorage(unittest.TestCase):
     """Unittests for testing the DBStorage class."""
 
@@ -192,5 +193,6 @@ class TestDBStorage(unittest.TestCase):
             cls = type(obj)
             self.assertEqual(obj, self.storage.get(cls, id_))
     
+
 if __name__ == "__main__":
     unittest.main()
