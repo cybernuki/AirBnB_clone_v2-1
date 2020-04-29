@@ -81,6 +81,7 @@ def modify_state(state_id):
         for key, value in info.items():
             if key != 'id' and key != 'created_at' and key != 'updated_at':
                 setattr(state, key, value)
+        state.save()
         storage.save()
         return jsonify(state.to_dict()), 200
     else:
