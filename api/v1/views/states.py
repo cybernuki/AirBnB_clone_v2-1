@@ -59,7 +59,7 @@ def create_state():
         abort(400, 'Not a JSON')
     if 'name' not in info:
         abort(400, 'Missing name')
-    state = State(name=info['name'])
+    state = State(**info)
     storage.new(state)
     storage.save()
     return jsonify(state.to_dict()), 201
