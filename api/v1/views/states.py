@@ -84,4 +84,4 @@ def modify_state(state_id):
         storage.save()
         return jsonify(state.to_dict()), 200
     else:
-        abort(400)
+        abort(404)

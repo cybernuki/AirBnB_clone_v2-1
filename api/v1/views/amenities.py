@@ -86,4 +86,4 @@ def modify_amenity(amenity_id):
         storage.save()
         return jsonify(amenity.to_dict()), 200
     else:
-        abort(400)
+        abort(404)
