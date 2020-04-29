@@ -66,7 +66,7 @@ def places_by_id(place_id):
         info = request.get_json()
         if not info:
             abort(400, "Not a JSON")
-            dont = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
+        dont = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
         for key, value in info.items():
             if key in dont:
                 pass
