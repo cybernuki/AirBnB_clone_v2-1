@@ -8,7 +8,7 @@ from models.state import State
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
-def get_states(state_id):
+def get_states(state_id=None):
     """ Endpoint that retrieves all states
         or retrieves one state by id
 
