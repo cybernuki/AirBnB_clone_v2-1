@@ -7,14 +7,15 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def cities_of_state(state_id):
     """
         Route for handle http methods for requested city by state
         state_id: Is the id of the searched state
     """
     state = storage.get(State, state_id)
-
+    print(state)
     if not state:
         abort(404)
 
@@ -22,6 +23,7 @@ def cities_of_state(state_id):
 
     if request.method == 'GET':
         return jsonify(cities)
+
     if request.method == 'POST':
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -35,7 +37,8 @@ def cities_of_state(state_id):
         return make_response(jsonify(city.to_dict()), 201)
 
 
-@app_views.route('cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def cities_by_id(city_id):
     """
         Route for a city that handle http methods
