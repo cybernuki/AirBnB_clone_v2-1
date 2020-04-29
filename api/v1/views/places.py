@@ -30,6 +30,8 @@ def places_of_city(city_id):
         kwargs = request.get_json()
         kwargs['city_id'] = city_id
         city = City(**kwargs)
+        storage.new(city)
+        storage.save()
         city.save()
         return make_response(jsonify(city.to_dict()), 201)
 
@@ -57,7 +59,8 @@ def places_by_id(place_id):
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for attr, val in request.get_json().items():
-            if attr not in ['id', 'place_id', 'created_at', 'updated_at']:
+            if attr not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
                 setattr(place, attr, val)
         place.save()
-        return jsonify(place.to_dict())
+        storage.save()
+        return jsonify(place.to_dict()), 200
