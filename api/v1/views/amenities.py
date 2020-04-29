@@ -82,6 +82,7 @@ def modify_amenity(amenity_id):
         for key, value in info.items():
             if key != 'id' and key != 'created_at' and key != 'updated_at':
                 setattr(amenity, key, value)
+        amenity.save()
         storage.save()
         return jsonify(amenity.to_dict()), 200
     else:
