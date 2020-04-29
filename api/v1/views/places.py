@@ -7,7 +7,7 @@ from models.place import Place
 from models.city import City
 
 
-@app_views.route('cities/<city_id>/places', methods=['GET', 'POST'],
+@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 def places_of_city(city_id):
     """
@@ -36,13 +36,14 @@ def places_of_city(city_id):
         if "name" not in data:
             abort(400, 'Missing name')
 
-        new_place = Place(user_id=data["user_id"], name=data["name"],
-                          city_id=city_id)
+        data['city_id'] = city_id
+        new_place = Place(**data)
+        new_place.save()
         storage.save()
         return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
+@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def places_by_id(place_id):
     """
