@@ -31,7 +31,7 @@ def places_of_city(city_id):
             abort(400, 'Not a JSON')
         if "user_id" not in data:
             abort(400, 'Missing user_id')
-        if storage.get("User", data["user_id"]) is None:
+        if storage.get(User, data["user_id"]) is None:
             abort(404)
         if "name" not in data:
             abort(400, 'Missing name')
