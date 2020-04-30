@@ -192,7 +192,7 @@ class TestDBStorage(unittest.TestCase):
             id_ = obj.id
             cls = type(obj)
             self.assertEqual(obj, self.storage.get(cls, id_))
-    
+
 
 if __name__ == "__main__":
     unittest.main()
